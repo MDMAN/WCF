@@ -1044,15 +1044,16 @@ class TemplateEngine extends SingletonFactory
 
     private function getSharedTemplateGroupID(): int
     {
-        if (!isset($this->sharedTemplateGroupID)) {
-            /** @var TemplateGroup $templateGroup */
-            foreach (TemplateGroupCacheBuilder::getInstance()->getData() as $templateGroup) {
-                if ($templateGroup->templateGroupFolderName === '_wcf_shared/') {
-                    $this->sharedTemplateGroupID = $templateGroup->templateGroupID;
-                    break;
-                }
-            }
+        $templateGroup = \array_find(
+            TemplateGroupCacheBuilder::getInstance()->getData(),
+            static fn (TemplateGroup $group) => $group->templateGroupFolderName === '_wcf_shared/'
+        );
+
+        if ($templateGroup === null) {
+            throw new \RuntimeException('Shared template group not found');
         }
+
+        $this->sharedTemplateGroupID = $templateGroup->templateGroupID;
 
         return $this->sharedTemplateGroupID;
     }
