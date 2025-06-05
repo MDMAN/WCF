@@ -4,6 +4,7 @@ namespace wcf\system\template;
 
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\StreamInterface;
+use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\Template;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
@@ -11,7 +12,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -1045,14 +1045,15 @@ class TemplateEngine extends SingletonFactory
     private function getSharedTemplateGroupID(): int
     {
         if (!isset($this->sharedTemplateGroupID)) {
-            $sql = "SELECT  templateGroupID
-                    FROM    wcf1_template_group
-                    WHERE   templateGroupFolderName = ?";
-            $statement = WCF::getDB()->prepare($sql);
-            $statement->execute(['_wcf_shared/']);
-
-            $this->sharedTemplateGroupID = $statement->fetchSingleColumn();
+            /** @var TemplateGroup $templateGroup */
+            foreach (TemplateGroupCacheBuilder::getInstance()->getData() as $templateGroup) {
+                if ($templateGroup->templateGroupFolderName === '_wcf_shared/') {
+                    $this->sharedTemplateGroupID = $templateGroup->templateGroupID;
+                    break;
+                }
+            }
         }
+
         return $this->sharedTemplateGroupID;
     }
 }
