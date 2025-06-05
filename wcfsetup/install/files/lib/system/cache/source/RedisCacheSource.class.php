@@ -46,7 +46,10 @@ class RedisCacheSource implements ICacheSource
         if (isset($parts[1])) {
             if ($useWildcard) {
                 // delete the complete hashset
-                $this->redis->del($this->getCacheName($parts[0], true));
+                $this->redis->del(
+                    $this->getCacheName($parts[0], true),
+                    $this->getCacheName($parts[0]),
+                );
             } else {
                 // delete the specified key from the hashset
                 $this->redis->hDel($this->getCacheName($parts[0], true), $parts[1]);
