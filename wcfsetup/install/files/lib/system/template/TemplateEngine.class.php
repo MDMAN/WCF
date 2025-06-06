@@ -1046,7 +1046,7 @@ class TemplateEngine extends SingletonFactory
     {
         if (!isset($this->sharedTemplateGroupID)) {
             $templateGroup = \array_find(
-                TemplateGroupCacheBuilder::getInstance()->getData(),
+                $this->templateGroupCache,
                 static fn(TemplateGroup $group) => $group->templateGroupFolderName === '_wcf_shared/'
             );
 
