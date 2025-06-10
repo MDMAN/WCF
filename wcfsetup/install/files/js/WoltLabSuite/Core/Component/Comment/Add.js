@@ -172,7 +172,6 @@ define(["require", "exports", "tslib", "../../Ui/Scroll", "../../Ui/Notification
     function setCommentEditorFeatures(textarea) {
         (0, Event_1.listenToCkeditor)(textarea).setupFeatures(({ features }) => {
             features.heading = false;
-            features.quoteBlock = false;
             features.spoiler = false;
             features.table = false;
         });
