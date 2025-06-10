@@ -73,10 +73,13 @@ final class BulkProcessingWorker extends AbstractWorker
     #[\Override]
     public function execute()
     {
+        $objectIDs = \array_slice($this->bulkProcessingData['objectIDs'], $this->limit * $this->loopCount, $this->limit);
+        if ($objectIDs === []) {
+            return;
+        }
+
         $objectList = $this->action->getObjectList();
-        $objectList->setObjectIDs(
-            \array_slice($this->bulkProcessingData['objectIDs'], $this->limit * $this->loopCount, $this->limit)
-        );
+        $objectList->setObjectIDs($objectIDs);
         $objectList->readObjects();
 
         $this->action->executeAction($objectList);
