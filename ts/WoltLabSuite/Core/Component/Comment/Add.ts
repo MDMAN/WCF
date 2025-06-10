@@ -207,7 +207,6 @@ export class CommentAdd {
 export function setCommentEditorFeatures(textarea: HTMLTextAreaElement): void {
   listenToCkeditor(textarea).setupFeatures(({ features }) => {
     features.heading = false;
-    features.quoteBlock = false;
     features.spoiler = false;
     features.table = false;
   });

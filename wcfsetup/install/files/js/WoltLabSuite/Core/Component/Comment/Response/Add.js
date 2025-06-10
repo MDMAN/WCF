@@ -6,7 +6,7 @@
  * @license GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @since 6.0
  */
-define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ui/Notification", "../../Ckeditor", "../../Ckeditor/Event", "WoltLabSuite/Core/User", "../../GuestTokenDialog", "WoltLabSuite/Core/Api/Comments/Responses/CreateResponse"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, UiNotification, Ckeditor_1, Event_1, User_1, GuestTokenDialog_1, CreateResponse_1) {
+define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language", "../../../Event/Handler", "../../../Ui/Scroll", "../../../Ui/Notification", "../../Ckeditor", "WoltLabSuite/Core/User", "../../GuestTokenDialog", "WoltLabSuite/Core/Api/Comments/Responses/CreateResponse", "../Add"], function (require, exports, tslib_1, Util_1, Language_1, EventHandler, UiScroll, UiNotification, Ckeditor_1, User_1, GuestTokenDialog_1, CreateResponse_1, Add_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.CommentResponseAdd = void 0;
@@ -36,11 +36,7 @@ define(["require", "exports", "tslib", "../../../Dom/Util", "../../../Language",
                 event.preventDefault();
                 void this.#submit();
             });
-            (0, Event_1.listenToCkeditor)(this.#textarea).setupFeatures(({ features }) => {
-                features.heading = false;
-                features.spoiler = false;
-                features.table = false;
-            });
+            (0, Add_1.setCommentEditorFeatures)(this.#textarea);
         }
         show(commentId) {
             if (this.#commentId) {
