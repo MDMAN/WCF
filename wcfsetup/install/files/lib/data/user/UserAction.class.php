@@ -221,7 +221,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     {
         $banExpires = $this->parameters['banExpires'];
         if ($banExpires) {
-            $banExpires = \strtotime($banExpires);
+            $banExpires = \DateTimeImmutable::createFromFormat('!Y-m-d', $banExpires, new \DateTimeZone(\TIMEZONE))->getTimestamp();
             if ($banExpires > 2147483647) {
                 $banExpires = 2147483647;
             }
@@ -587,7 +587,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
             $collator = new \Collator(WCF::getLanguage()->getLocale());
             \usort(
                 $list,
-                static fn (array $item1, array $item2) => $collator->compare($item1['label'], $item2['label'])
+                static fn(array $item1, array $item2) => $collator->compare($item1['label'], $item2['label'])
             );
         }
 
@@ -1135,9 +1135,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
     /**
      * @since 5.3
      */
-    public function validateSaveUserConsent()
-    {
-    }
+    public function validateSaveUserConsent() {}
 
     /**
      * @since 5.3
