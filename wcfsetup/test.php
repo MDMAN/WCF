@@ -165,7 +165,7 @@ function checkX64()
 {
     return \PHP_INT_SIZE == 8;
 }
-function formatFilesizeBinary($byte): string
+function formatFilesizeBinary($byte)
 {
     $symbol = 'Byte';
     if ($byte >= 1024) {
@@ -234,7 +234,7 @@ function checkOpcache()
 
     return true;
 }
-function checkTls(): bool
+function checkTls()
 {
     // @see \wcf\system\request\RouteHandler::secureConnection()
     if (
