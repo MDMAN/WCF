@@ -97,6 +97,7 @@ declare global {
   }
 
   interface WoltlabCoreFileUploadElement extends HTMLElement {
+    uploadFiles(files: File[]): void;
     get disabled(): boolean;
     set disabled(disabled: boolean);
     get maximumCount(): number;
