@@ -44,6 +44,11 @@
         // Reset the selected file.
         this.#element.value = "";
       });
+
+      // Pass-through for the synthethic click event.
+      this.addEventListener("click", () => {
+        this.#element.click();
+      });
     }
 
     connectedCallback() {
