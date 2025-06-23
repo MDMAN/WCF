@@ -46,7 +46,11 @@
       });
 
       // Pass-through for the synthethic click event.
-      this.addEventListener("click", () => {
+      this.addEventListener("click", (event) => {
+        if (event.target !== this) {
+          return;
+        }
+
         this.#element.click();
       });
     }
