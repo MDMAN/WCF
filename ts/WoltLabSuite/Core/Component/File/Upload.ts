@@ -340,6 +340,12 @@ export function setup(): void {
 
       clearPreviousErrors(element);
 
+      if (!validateFileLimit(element, 1)) {
+        promiseReject!();
+
+        return;
+      }
+
       if (!validateFileExtension(element, file)) {
         promiseReject!();
 
