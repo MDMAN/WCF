@@ -61,6 +61,13 @@
 	/* The content area must not contain a border radius at all, because it is
 	   difficult to detect if there is an adjacent message tab menu. */
 	border-radius: 0 !important;
+
+	/* Override the default styling added in CKEditor v46.0.0 */
+	font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+    word-break: inherit;
 }
 
 .ck.ck-button.ck-button:not(.ck-disabled) {
