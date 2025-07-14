@@ -298,7 +298,10 @@ export async function setupCkeditor(
   }
   if (features.media) {
     setupMedia(element);
+  } else {
+    bbcodes = bbcodes.filter((item) => item.name !== "media");
   }
+
   setupMention(element);
   if (features.quoteBlock) {
     setupQuote(element);
