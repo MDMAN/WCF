@@ -308,33 +308,43 @@ export function setup(): void {
         }
       }
 
+      element.markAsBusy();
+
       // Resize all files in parallel but keep the original order. This ensures
       // that files are uploaded in the same order that they were provided by
       // the browser.
-      void Promise.allSettled(files.map((file) => resizeImage(element, file))).then(async (results) => {
-        const validFiles: File[] = [];
-        for (let i = 0, length = results.length; i < length; i++) {
-          const result = results[i];
+      void Promise.allSettled(files.map((file) => resizeImage(element, file)))
+        .then(async (results) => {
+          const validFiles: File[] = [];
+          for (let i = 0, length = results.length; i < length; i++) {
+            const result = results[i];
 
-          if (result.status === "fulfilled") {
-            validFiles.push(result.value);
-          } else {
-            reportError(element, files[i], getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }));
+            if (result.status === "fulfilled") {
+              validFiles.push(result.value);
+            } else {
+              reportError(
+                element,
+                files[i],
+                getPhrase("wcf.upload.error.damagedImageFile", { filename: files[i].name }),
+              );
+            }
           }
-        }
 
-        const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
+          const checksums = await Promise.allSettled(validFiles.map((file) => getSha256Hash(file)));
 
-        for (let i = 0, length = checksums.length; i < length; i++) {
-          const result = checksums[i];
+          for (let i = 0, length = checksums.length; i < length; i++) {
+            const result = checksums[i];
 
-          if (result.status === "fulfilled") {
-            void upload(element, validFiles[i], result.value);
-          } else {
-            throw new Error(result.reason);
+            if (result.status === "fulfilled") {
+              void upload(element, validFiles[i], result.value);
+            } else {
+              throw new Error(result.reason);
+            }
           }
-        }
-      });
+        })
+        .finally(() => {
+          element.markAsReady();
+        });
     });
 
     element.addEventListener("ckeditorDrop", (event: CustomEvent<CkeditorDropEvent>) => {

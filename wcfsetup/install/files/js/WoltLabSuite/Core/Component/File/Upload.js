@@ -209,10 +209,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                         return;
                     }
                 }
+                element.markAsBusy();
                 // Resize all files in parallel but keep the original order. This ensures
                 // that files are uploaded in the same order that they were provided by
                 // the browser.
-                void Promise.allSettled(files.map((file) => resizeImage(element, file))).then(async (results) => {
+                void Promise.allSettled(files.map((file) => resizeImage(element, file)))
+                    .then(async (results) => {
                     const validFiles = [];
                     for (let i = 0, length = results.length; i < length; i++) {
                         const result = results[i];
@@ -233,6 +235,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Helper/Selector", "Wol
                             throw new Error(result.reason);
                         }
                     }
+                })
+                    .finally(() => {
+                    element.markAsReady();
                 });
             });
             element.addEventListener("ckeditorDrop", (event) => {
