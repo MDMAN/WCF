@@ -148,4 +148,8 @@ declare global {
     "woltlab-core-google-maps": WoltlabCoreGoogleMapsElement;
     "woltlab-core-reaction-summary": WoltlabCoreReactionSummaryElement;
   }
+
+  // The type `Buffer` does not exist. To avoid having to load `@types/node`, we define it here.
+  // @see https://github.com/Daninet/hash-wasm/issues/68
+  type Buffer = BufferSource;
 }
