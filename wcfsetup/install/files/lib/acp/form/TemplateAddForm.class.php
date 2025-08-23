@@ -219,14 +219,14 @@ class TemplateAddForm extends AbstractFormBuilderForm
                                 $parameters['data']['application'] = $this->copiedTemplate->application;
                             } else {
                                 $sql = "SELECT  packageID
-                                    FROM    wcf" . WCF_N . "_template
-                                    WHERE   templateName = ?
-                                        AND templateGroupID IS NULL";
+                                        FROM    wcf" . WCF_N . "_template
+                                        WHERE   templateName = ?
+                                            AND templateGroupID IS NULL";
                                 $statement = WCF::getDB()->prepareStatement($sql);
                                 $statement->execute([
                                     $parameters['data']['templateName']
                                 ]);
-                                $packageID = $statement->fetchSingleRow() ?: 1;
+                                $packageID = $statement->fetchSingleColumn() ?: 1;
 
                                 $parameters['data']['application'] = Package::getAbbreviation(
                                     PackageCache::getInstance()->getPackage($packageID)->package
