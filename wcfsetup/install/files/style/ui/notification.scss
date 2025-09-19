@@ -76,11 +76,11 @@
 	}
 
 	fa-icon[name="bell"] {
-		color: rgba(0, 153, 0, 1);
+		color: var(--preset-green);
 	}
 
 	fa-icon[name="bell-slash"] {
-		color: rgba(204, 0, 0, 1);
+		color: var(--preset-red);
 	}
 }
 
@@ -99,11 +99,11 @@
 	}
 
 	fa-icon[name="xmark"] {
-		color: rgba(204, 0, 0, 1);
+		color: var(--preset-red);
 	}
 
 	fa-icon[name="bolt"],
 	fa-icon[name="clock"] {
-		color: rgba(0, 153, 0, 1);
+		color: var(--preset-green);
 	}
 }
