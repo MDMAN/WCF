@@ -380,6 +380,13 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor
                         $node = $node->nextSibling;
                         continue;
                     }
+                } else {
+                    $textContent = StringUtil::trim($node->textContent);
+                    // Ignore any text node that only contains whitespace.
+                    if ($textContent === '') {
+                        $node = $node->nextSibling;
+                        continue;
+                    }
                 }
 
                 $node = $appendToPreviousParagraph($node);
